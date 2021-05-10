@@ -1,14 +1,18 @@
 package com.fastcampus.jpa.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class User {
+    @NonNull
     private String name;
+    @NonNull
     private String email;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
