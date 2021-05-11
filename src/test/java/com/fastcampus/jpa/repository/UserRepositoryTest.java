@@ -5,6 +5,8 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import javax.transaction.Transactional;
@@ -48,6 +50,37 @@ class UserRepositoryTest {
         System.out.println(user);
     }
 
+    @Test
+    void crud4() {
+        long count = userRepository.count();
+        System.out.println("count = " + count);
+    }
+
+    @Test
+    void crud5() {
+        userRepository.deleteById(1L);
+        userRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void crud6() {
+        userRepository.deleteAll();
+        userRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    void crud7_page() {
+        // NOTE: page 는 0페이지부터 시작한다.
+        Page<User> users = userRepository.findAll(PageRequest.of(0, 3));
+
+        System.out.println("users = " + users);
+        System.out.println("users.getTotalElements() = " + users.getTotalElements());
+        System.out.println("users.getTotalPages() = " + users.getTotalPages());
+        System.out.println("users.getNumberOfElements() = " + users.getNumberOfElements());
+        System.out.println("users.getSort() = " + users.getSort());
+        System.out.println("users.getSize() = " + users.getSize());
+        users.getContent().forEach(System.out::println);
+    }
 
 
 
