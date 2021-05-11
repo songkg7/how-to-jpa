@@ -5,15 +5,14 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -80,6 +79,17 @@ class UserRepositoryTest {
         System.out.println("users.getSort() = " + users.getSort());
         System.out.println("users.getSize() = " + users.getSize());
         users.getContent().forEach(System.out::println);
+    }
+
+    @Test
+    void example() {
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("name")
+                .withMatcher("email", endsWith()); // ex) contains(), ...
+
+        Example<User> example = Example.of(new User("ma", "fastcampus.com"), matcher);
+
+        userRepository.findAll(example).forEach(System.out::println);
     }
 
 
