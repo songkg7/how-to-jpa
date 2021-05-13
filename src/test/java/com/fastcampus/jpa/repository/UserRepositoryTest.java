@@ -82,7 +82,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void example() {
+    void example() { // NOTE: example 을 사용하는 것보다 querydsl 을 사용하는 것이 더 낫다.
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnorePaths("name")
                 .withMatcher("email", endsWith()); // ex) contains(), ...
@@ -92,6 +92,13 @@ class UserRepositoryTest {
         userRepository.findAll(example).forEach(System.out::println);
     }
 
+    @Test
+    void update() {
+        userRepository.save(new User("david", "david@fastcampus.com"));
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setEmail("martin-updated@fastcampus.com");
+        userRepository.save(user);
+    }
 
 
 }
