@@ -10,9 +10,7 @@ import org.springframework.data.domain.*;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
@@ -129,6 +127,20 @@ class UserRepositoryTest {
         System.out.println("findByCreatedAtBetween : " + userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)));
         System.out.println("findByIdBetween : " + userRepository.findByIdBetween(1L, 3L));
         System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
+
+    }
+
+    @Test
+    void select_valid() {
+        System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
+//        System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty());
+        // NOTE: In 절을 사용할 때는 성능이슈가 생길 수 있으므로 들어가는 데이터의 길이에 주의해야 한다.
+        System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("martin", "dennis")));
+
+        System.out.println("findByNameStartingWith : " + userRepository.findByNameStartingWith("ha"));
+        System.out.println("findByNameEndingWith : " + userRepository.findByNameEndingWith("ril"));
+        System.out.println("findByNameContains : " + userRepository.findByNameContains("ari"));
+        System.out.println("findByNameLike : " + userRepository.findByNameLike("%ari%"));
 
     }
 
