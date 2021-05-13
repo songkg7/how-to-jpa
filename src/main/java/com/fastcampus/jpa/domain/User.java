@@ -1,6 +1,9 @@
 package com.fastcampus.jpa.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,7 +18,7 @@ import java.util.List;
 @Table(name = "user",
         indexes = {@Index(columnList = "name")},
         uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-@EntityListeners(value = {MyEntityListener.class, UserEntityListener.class})
+@EntityListeners(value = {AuditingEntityListener.class, UserEntityListener.class})
 public class User implements Auditable {
 
     @Id
@@ -32,9 +35,11 @@ public class User implements Auditable {
     private Gender gender;
 
     @Column(updatable = false) // update 시에 반영하지 않는다.
+    @CreatedDate
     private LocalDateTime createdAt;
 
 //    @Column(insertable = false)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
 
