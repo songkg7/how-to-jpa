@@ -1,6 +1,8 @@
 package com.fastcampus.jpa.repository;
 
 import com.fastcampus.jpa.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -63,10 +65,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByNameLike(String name);
 
+    // Sort
     List<User> findTop1ByNameOrderByIdDesc(String name);
 
     List<User> findFirstByNameOrderByIdDescEmailAsc(String name);
 
     List<User> findFirstByName(String name, Sort sort);
+
+    // Page
+    Page<User> findByName(String name, Pageable pageable);
 
 }
