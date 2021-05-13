@@ -2,6 +2,7 @@ package com.fastcampus.jpa.repository;
 
 import com.fastcampus.jpa.domain.User;
 import org.assertj.core.util.Lists;
+import org.hibernate.criterion.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -142,6 +143,14 @@ class UserRepositoryTest {
         System.out.println("findByNameContains : " + userRepository.findByNameContains("ari"));
         System.out.println("findByNameLike : " + userRepository.findByNameLike("%ari%"));
 
+    }
+
+    @Test
+    void pagingAndSortingTest() {
+        System.out.println("findTop1ByNameOrderByDesc : " + userRepository.findTop1ByNameOrderByIdDesc("haril"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("haril"));
+        System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("haril", Sort.by(Sort.Order.desc("id"))));
+        System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("haril", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
     }
 
 }
