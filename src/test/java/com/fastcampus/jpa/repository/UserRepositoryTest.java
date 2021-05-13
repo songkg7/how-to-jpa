@@ -2,6 +2,7 @@ package com.fastcampus.jpa.repository;
 
 import com.fastcampus.jpa.domain.Gender;
 import com.fastcampus.jpa.domain.User;
+import com.fastcampus.jpa.domain.UserHistoryRepository;
 import org.assertj.core.util.Lists;
 import org.hibernate.criterion.Order;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,9 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     @Test
     void crud() {
@@ -207,6 +211,21 @@ class UserRepositoryTest {
 
         System.out.println("to-be : " + userRepository.findAll().get(0));
 
+    }
+
+    @Test
+    void userHistoryTest() {
+        User user = new User();
+        user.setEmail("haril-new@fastcampus.com");
+        user.setName("haril-new");
+
+        userRepository.save(user);
+
+        user.setName("haril-new-new");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
     }
 
 }

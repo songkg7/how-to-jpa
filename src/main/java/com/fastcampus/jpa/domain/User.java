@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "user",
         indexes = {@Index(columnList = "name")},
         uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-@EntityListeners(value = MyEntityListener.class)
+@EntityListeners(value = {MyEntityListener.class, UserEntityListener.class})
 public class User implements Auditable {
 
     @Id
