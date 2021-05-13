@@ -1,5 +1,8 @@
-package com.fastcampus.jpa.domain;
+package com.fastcampus.jpa.domain.listener;
 
+import com.fastcampus.jpa.domain.User;
+import com.fastcampus.jpa.domain.UserHistory;
+import com.fastcampus.jpa.domain.UserHistoryRepository;
 import com.fastcampus.jpa.support.BeanUtils;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;

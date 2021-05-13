@@ -19,8 +19,6 @@ class UserTest {
         User user3 = User.builder()
                 .name("haril")
                 .email("haril@fastcampus.com")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
                 .build();
         System.out.println(user);
     }

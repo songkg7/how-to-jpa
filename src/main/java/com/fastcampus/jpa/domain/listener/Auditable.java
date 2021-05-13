@@ -1,4 +1,4 @@
-package com.fastcampus.jpa.domain;
+package com.fastcampus.jpa.domain.listener;
 
 import java.time.LocalDateTime;
 
