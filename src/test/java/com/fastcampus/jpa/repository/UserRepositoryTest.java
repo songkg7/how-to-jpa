@@ -13,6 +13,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
@@ -180,6 +182,31 @@ class UserRepositoryTest {
         userRepository.findAll().forEach(System.out::println);
 
         System.out.println(userRepository.findRawRecord().get("gender"));
+    }
+
+    @Test
+    void prePersist() {
+        User user = new User();
+        user.setEmail("haril2@fastcampus.com");
+        user.setName("haril");
+
+        userRepository.save(user);
+
+        assertNotNull(user.getCreatedAt());
+        System.out.println(user.getCreatedAt());
+    }
+
+    @Test
+    void preUpdateTest() {
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        System.out.println("as-is : " +user);
+
+        user.setName("martin22");
+        userRepository.save(user);
+
+        System.out.println("to-be : " + userRepository.findAll().get(0));
+
     }
 
 }
