@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,6 +117,18 @@ class UserRepositoryTest {
         // 상위 개수 가져오기
         System.out.println("findFirst1ByName : " + userRepository.findFirst1ByName("haril"));
         System.out.println("findTop2ByName : " + userRepository.findTop2ByName("haril"));
+
+        System.out.println("findByEmailAndName : " + userRepository.findByEmailAndName("haril@fastcampus.com", "haril"));
+        System.out.println("findByEmailOrName : " + userRepository.findByEmailOrName("haril@fastcampus.com", "dennis"));
+
+        System.out.println("findByCreatedAtAfter : " + userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByIdAfter : " + userRepository.findByIdAfter(4L)); // 날짜와 시간이 아니여도 사용가능하지만, 지양하는 것이 좋다.
+        System.out.println("findByCreatedAtGreaterThan : " + userRepository.findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByCreatedAtGreaterThanEqual : " + userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)));
+
+        System.out.println("findByCreatedAtBetween : " + userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)));
+        System.out.println("findByIdBetween : " + userRepository.findByIdBetween(1L, 3L));
+        System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
 
     }
 
