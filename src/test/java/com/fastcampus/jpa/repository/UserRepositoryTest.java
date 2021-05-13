@@ -100,5 +100,23 @@ class UserRepositoryTest {
         userRepository.save(user);
     }
 
+    @Test
+    void select() {
+        System.out.println(userRepository.findByName("dennis"));
+
+        // NOTE: 아래는 모두 동일한 쿼리가 생성된다.
+        System.out.println("findByEmail : " + userRepository.findByEmail("haril@fastcampus.com"));
+        System.out.println("getByEmail : " + userRepository.getByEmail("haril@fastcampus.com"));
+        System.out.println("readByEmail : " + userRepository.readByEmail("haril@fastcampus.com"));
+        System.out.println("queryByEmail : " + userRepository.queryByEmail("haril@fastcampus.com"));
+        System.out.println("searchByEmail : " + userRepository.searchByEmail("haril@fastcampus.com"));
+        System.out.println("streamByEmail : " + userRepository.streamByEmail("haril@fastcampus.com"));
+        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("haril@fastcampus.com"));
+
+        // 상위 개수 가져오기
+        System.out.println("findFirst1ByName : " + userRepository.findFirst1ByName("haril"));
+        System.out.println("findTop2ByName : " + userRepository.findTop2ByName("haril"));
+
+    }
 
 }
