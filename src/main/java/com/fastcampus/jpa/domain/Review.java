@@ -1,28 +1,36 @@
 package com.fastcampus.jpa.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 import javax.persistence.*;
 
+import lombok.*;
+
+/**
+ * @author songkg7
+ * @since 2021/06/11 10:00 오후
+ */
 @Data
-@Entity
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserHistory extends BaseEntity {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
-    private String email;
+    private String content;
+
+    private float score;
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Book book;
 
 }
