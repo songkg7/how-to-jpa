@@ -1,5 +1,7 @@
-package com.fastcampus.jpa.domain;
+package com.fastcampus.jpa.repository;
 
+import com.fastcampus.jpa.domain.Book;
+import com.fastcampus.jpa.domain.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

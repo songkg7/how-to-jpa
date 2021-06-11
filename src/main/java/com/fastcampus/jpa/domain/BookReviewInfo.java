@@ -1,9 +1,6 @@
 package com.fastcampus.jpa.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import lombok.*;
 
@@ -21,7 +18,8 @@ public class BookReviewInfo extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long bookId;
+    @OneToOne(optional = false) // optional = false 를 하면 left outer join 이 inner join 으로 변한다.
+    private Book book;
 
     private float averageReviewScore;
 
