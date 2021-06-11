@@ -2,6 +2,7 @@ package com.fastcampus.jpa.repository;
 
 import com.fastcampus.jpa.domain.Gender;
 import com.fastcampus.jpa.domain.User;
+import com.fastcampus.jpa.domain.UserHistory;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -243,7 +244,14 @@ class UserRepositoryTest {
         user.setEmail("daniel@fastcampus.com");
         userRepository.save(user);
 
-        userHistoryRepository.findAll().forEach(System.out::println);
+//        userHistoryRepository.findAll().forEach(System.out::println);
+
+        List<UserHistory> result = userHistoryRepository.findByUserId(
+                userRepository.findByEmail("daniel@fastcampus.com").getId()
+        );
+
+        result.forEach(System.out::println);
+
     }
 
 }
