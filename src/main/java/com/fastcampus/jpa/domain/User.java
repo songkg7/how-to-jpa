@@ -1,14 +1,9 @@
 package com.fastcampus.jpa.domain;
 
-import com.fastcampus.jpa.domain.listener.Auditable;
 import com.fastcampus.jpa.domain.listener.UserEntityListener;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -30,6 +25,7 @@ public class User extends BaseEntity {
 
     @NonNull
     private String name;
+
     @NonNull
     private String email;
 

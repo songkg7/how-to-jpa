@@ -3,6 +3,7 @@ package com.fastcampus.jpa.repository;
 import com.fastcampus.jpa.domain.Gender;
 import com.fastcampus.jpa.domain.User;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -221,6 +222,25 @@ class UserRepositoryTest {
 
         user.setName("haril-new-new");
 
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+    @DisplayName("1. userRelation")
+    @Test
+    void test_1() throws Exception {
+        User user = new User();
+        user.setName("david");
+        user.setEmail("david@fastcampus.com");
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+
+        user.setName("daniel");
+        userRepository.save(user);
+
+        user.setEmail("daniel@fastcampus.com");
         userRepository.save(user);
 
         userHistoryRepository.findAll().forEach(System.out::println);

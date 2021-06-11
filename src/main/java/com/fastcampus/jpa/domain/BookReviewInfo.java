@@ -1,8 +1,8 @@
 package com.fastcampus.jpa.domain;
 
-import javax.persistence.*;
-
 import lombok.*;
+
+import javax.persistence.*;
 
 
 @Data

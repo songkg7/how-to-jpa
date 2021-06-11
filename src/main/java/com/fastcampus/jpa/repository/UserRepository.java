@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, Long> {
