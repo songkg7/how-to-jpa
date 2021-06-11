@@ -2,9 +2,7 @@ package com.fastcampus.jpa.repository;
 
 import com.fastcampus.jpa.domain.Gender;
 import com.fastcampus.jpa.domain.User;
-import com.fastcampus.jpa.domain.UserHistoryRepository;
 import org.assertj.core.util.Lists;
-import org.hibernate.criterion.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

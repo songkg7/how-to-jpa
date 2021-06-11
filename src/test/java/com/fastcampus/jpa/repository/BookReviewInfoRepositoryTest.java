@@ -1,7 +1,6 @@
 package com.fastcampus.jpa.repository;
 
 import com.fastcampus.jpa.domain.Book;
-import com.fastcampus.jpa.domain.BookRepository;
 import com.fastcampus.jpa.domain.BookReviewInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,11 +36,15 @@ class BookReviewInfoRepositoryTest {
         givenBookReviewInfo();
 
         Book result = bookReviewInfoRepository
-                        .findById(1L)
-                        .orElseThrow(RuntimeException::new)
-                        .getBook();
+                .findById(1L)
+                .orElseThrow(RuntimeException::new)
+                .getBook();
 
         System.out.println("result = " + result);
+
+        BookReviewInfo result2 = bookRepository.findById(1L)
+                .orElseThrow(RuntimeException::new).getBookReviewInfo();
+        System.out.println("result2 = " + result2);
 
     }
 

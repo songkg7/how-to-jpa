@@ -27,4 +27,8 @@ public class Book extends BaseEntity implements Auditable {
 
     private Long publisherId;
 
+    @OneToOne(mappedBy = "book")
+    @ToString.Exclude
+    private BookReviewInfo bookReviewInfo;
+
 }
