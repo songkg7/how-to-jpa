@@ -25,18 +25,6 @@ class BookRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
-    void bookTest() {
-        Book book = new Book();
-        book.setName("JPA");
-        book.setAuthorId(1L);
-//        book.setPublisherId(1L);
-
-        bookRepository.save(book);
-
-        System.out.println(bookRepository.findAll());
-    }
-
     @DisplayName("2. bookRelation")
     @Test
     @Transactional
