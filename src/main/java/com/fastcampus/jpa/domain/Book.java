@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -42,12 +43,14 @@ public class Book extends BaseEntity {
     @ToString.Exclude
     private Publisher publisher;
 
-    @ManyToMany
+//    @ManyToMany
+    @OneToMany
+    @JoinColumn(name = "book_id")
     @ToString.Exclude
-    private List<Author> authors = new ArrayList<>();
+    private List<BookAndAuthor> bookAndAuthors = new ArrayList<>();
 
-    public void addAuthor(Author... author) {
-        this.authors.addAll(Arrays.asList(author));
+    public void addBookAndAuthors(BookAndAuthor... bookAndAuthors) {
+        Collections.addAll(this.bookAndAuthors, bookAndAuthors);
     }
 
 }
