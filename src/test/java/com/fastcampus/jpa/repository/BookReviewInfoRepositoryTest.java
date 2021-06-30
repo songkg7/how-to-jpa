@@ -20,7 +20,7 @@ class BookReviewInfoRepositoryTest {
     @Test
     void test_1() throws Exception {
         BookReviewInfo bookReviewInfo = new BookReviewInfo();
-//        bookReviewInfo.setBookId(1L);
+        bookReviewInfo.setBook(givenBook());
         bookReviewInfo.setAverageReviewScore(4.5f);
         bookReviewInfo.setReviewCount(2);
 
@@ -42,7 +42,8 @@ class BookReviewInfoRepositoryTest {
 
         System.out.println("result = " + result);
 
-        BookReviewInfo result2 = bookRepository.findById(1L)
+        BookReviewInfo result2 = bookRepository
+                .findById(1L)
                 .orElseThrow(RuntimeException::new).getBookReviewInfo();
         System.out.println("result2 = " + result2);
 
@@ -52,7 +53,6 @@ class BookReviewInfoRepositoryTest {
         Book book = new Book();
         book.setName("JPA");
         book.setAuthorId(1L);
-//        book.setPublisherId(1L);
 
         return bookRepository.save(book);
     }
