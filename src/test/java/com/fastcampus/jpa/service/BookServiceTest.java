@@ -1,5 +1,6 @@
 package com.fastcampus.jpa.service;
 
+import com.fastcampus.jpa.domain.Book;
 import com.fastcampus.jpa.repository.AuthorRepository;
 import com.fastcampus.jpa.repository.BookRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -25,13 +26,27 @@ class BookServiceTest {
     @Test
     void test_1() throws Exception {
         try {
-            bookService.put();
+            bookService.putBookAndAuthor();
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
 
         System.out.println("book : " + bookRepository.findAll());
         System.out.println("author : " + authorRepository.findAll());
+
+    }
+
+    @DisplayName("2. isolation")
+    @Test
+    void test_2() throws Exception {
+        Book book = new Book();
+        book.setName("JPA 강의");
+
+        bookRepository.save(book);
+
+        bookService.get(1L);
+
+        System.out.println(">>>" + bookRepository.findAll());
 
     }
 

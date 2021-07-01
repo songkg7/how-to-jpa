@@ -6,6 +6,7 @@ import com.fastcampus.jpa.repository.AuthorRepository;
 import com.fastcampus.jpa.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -14,10 +15,6 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
-
-    public void put() {
-        this.putBookAndAuthor();
-    }
 
     @Transactional
     public void putBookAndAuthor() {
@@ -33,6 +30,20 @@ public class BookService {
         authorRepository.save(author);
 
         throw new RuntimeException("오류가 나서 커밋이 발생하지 않습니다.");
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void get(Long id) {
+        System.out.println(">>>" + bookRepository.findById(id));
+        System.out.println(">>>" + bookRepository.findAll());
+
+        System.out.println(">>>" + bookRepository.findById(id));
+        System.out.println(">>>" + bookRepository.findAll());
+
+        Book book = bookRepository.findById(id).get();
+        book.setName("바뀔까?");
+        bookRepository.save(book);
+
     }
 
 }
