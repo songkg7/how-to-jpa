@@ -24,12 +24,14 @@ class BookServiceTest {
     @DisplayName("1. transactionTest")
     @Test
     void test_1() throws Exception {
-        bookService.putBookAndAuthor();
+        try {
+            bookService.putBookAndAuthor();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("book : " + bookRepository.findAll());
         System.out.println("author : " + authorRepository.findAll());
-
-
 
     }
 
