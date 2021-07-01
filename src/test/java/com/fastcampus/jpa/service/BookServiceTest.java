@@ -25,8 +25,8 @@ class BookServiceTest {
     @Test
     void test_1() throws Exception {
         try {
-            bookService.putBookAndAuthor();
-        } catch (Exception e) {
+            bookService.put();
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
 

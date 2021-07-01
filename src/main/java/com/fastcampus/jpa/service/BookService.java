@@ -15,8 +15,12 @@ public class BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
+    public void put() {
+        this.putBookAndAuthor();
+    }
+
     @Transactional
-    public void putBookAndAuthor() throws Exception {
+    public void putBookAndAuthor() {
         Book book = new Book();  // 비영속상태
         book.setName("JPA 시작하기");
 
@@ -28,7 +32,7 @@ public class BookService {
         // save() 는 자체적으로 트랜잭션이 걸려있다. 상위에 별도의 트랜잭션이 없다면 save 단위로 처리된다.
         authorRepository.save(author);
 
-        throw new Exception("오류가 나서 커밋이 발생하지 않습니다.");
+        throw new RuntimeException("오류가 나서 커밋이 발생하지 않습니다.");
     }
 
 }
