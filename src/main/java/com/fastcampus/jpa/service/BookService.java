@@ -7,6 +7,7 @@ import com.fastcampus.jpa.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -15,21 +16,23 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final AuthorService authorService;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void putBookAndAuthor() {
         Book book = new Book();  // 비영속상태
         book.setName("JPA 시작하기");
 
         bookRepository.save(book);  // 영속상태
 
-        Author author = new Author();
-        author.setName("martin");
+        try {
+            authorService.putAuthor();
+        } catch (RuntimeException e) {
+//            e.printStackTrace();
+        }
 
-        // save() 는 자체적으로 트랜잭션이 걸려있다. 상위에 별도의 트랜잭션이 없다면 save 단위로 처리된다.
-        authorRepository.save(author);
+//        throw new RuntimeException("오류가 발생하였습니다. transaction은 어떻게 될까요?");
 
-        throw new RuntimeException("오류가 나서 커밋이 발생하지 않습니다.");
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
