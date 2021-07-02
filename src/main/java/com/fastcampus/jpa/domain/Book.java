@@ -30,8 +30,6 @@ public class Book extends BaseEntity {
 
     private Long authorId;
 
-//    private Long publisherId;
-
     @OneToOne(mappedBy = "book")
     @ToString.Exclude
     private BookReviewInfo bookReviewInfo;
@@ -41,11 +39,10 @@ public class Book extends BaseEntity {
     @ToString.Exclude
     private List<Review> reviews = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ToString.Exclude
     private Publisher publisher;
 
-//    @ManyToMany
     @OneToMany
     @JoinColumn(name = "book_id")
     @ToString.Exclude
