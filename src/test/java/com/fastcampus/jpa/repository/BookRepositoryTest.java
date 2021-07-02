@@ -60,6 +60,45 @@ class BookRepositoryTest {
 
         System.out.println("publishers = " + publisherRepository.findAll());
 
+//        Book book2 = bookRepository.findById(1L).get();
+//        bookRepository.delete(book2);
+//        bookRepository.deleteById(1L);
+
+        Book book3 = bookRepository.findById(1L).get();
+        book3.setPublisher(null);
+
+        bookRepository.save(book3);
+
+        System.out.println("books : " + bookRepository.findAll());
+        System.out.println("publishers : " + publisherRepository.findAll());
+        System.out.println("book3-publishers : " + bookRepository.findById(1L).get().getPublisher());
+
+    }
+
+    @DisplayName("4. bookRemoveCascadeTest")
+    @Test
+    void test_4() throws Exception {
+        bookRepository.deleteById(1L);
+
+        System.out.println("books : " + bookRepository.findAll());
+        System.out.println("publishers : " + publisherRepository.findAll());
+
+        bookRepository.findAll().forEach(book -> System.out.println(book.getPublisher()));
+
+    }
+
+    @DisplayName("5. softDelete")
+    @Test
+    void test_5() throws Exception {
+        bookRepository.findAll().forEach(System.out::println);
+        System.out.println(bookRepository.findById(3L));
+
+        // 아래 처럼 사용하는 것은 개발자의 실수를 발생시키기 쉽다. @Where 를 사용하자
+//        bookRepository.findByCategoryIsNull().forEach(System.out::println);
+//
+//        bookRepository.findAllByDeletedFalse().forEach(System.out::println);
+//        bookRepository.findByCategoryIsNullAndDeletedFalse().forEach(System.out::println);
+
     }
 
     private void givenBookAndReview() {
