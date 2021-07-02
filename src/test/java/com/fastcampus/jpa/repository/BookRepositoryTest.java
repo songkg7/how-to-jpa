@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -111,6 +112,21 @@ class BookRepositoryTest {
                         "JPA 초격차 패키지",
                         LocalDateTime.now().minusDays(1L),
                         LocalDateTime.now().minusDays(1L)));
+
+        System.out.println("findByNameRecently : " + bookRepository.findByNameRecently("JPA 초격차 패키지",
+                LocalDateTime.now().minusDays(1L),
+                LocalDateTime.now().minusDays(1L)));
+
+        System.out.println(bookRepository.findBookNameAndCategory());
+
+        bookRepository.findBookNameAndCategory().forEach(b -> System.out.println(b.getName() + " : " + b.getCategory()));
+
+        bookRepository.findBookNameAndCategory(PageRequest.of(1, 1))
+                .forEach(bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory()));
+
+        bookRepository.findBookNameAndCategory(PageRequest.of(0, 1))
+                .forEach(bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory()));
+
     }
 
     private void givenBookAndReview() {
