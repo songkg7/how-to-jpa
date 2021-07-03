@@ -5,8 +5,10 @@ import com.fastcampus.jpa.repository.dto.BookNameAndCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,5 +37,16 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query(value = "select new com.fastcampus.jpa.repository.dto.BookNameAndCategory(b.name, b.category) from Book b")
     Page<BookNameAndCategory> findBookNameAndCategory(Pageable pageable);
+
+    @Query(value = "select * from book", nativeQuery = true)
+    List<Book> findAllCustom();
+
+    @Modifying
+    @Transactional
+    @Query(value = "update book set category = 'IT 전문서'", nativeQuery = true)
+    int updateCategories();  // affected row, 업데이트된 로우 수를 반환
+
+    @Query(value = "show tables", nativeQuery = true)
+    List<String> showTables();
 
 }

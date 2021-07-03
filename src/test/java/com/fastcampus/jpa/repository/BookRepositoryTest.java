@@ -12,6 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class BookRepositoryTest {
@@ -126,6 +129,31 @@ class BookRepositoryTest {
 
         bookRepository.findBookNameAndCategory(PageRequest.of(0, 1))
                 .forEach(bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory()));
+
+    }
+
+    @DisplayName("7. nativeQueryTest")
+    @Test
+    void test_7() throws Exception {
+//        bookRepository.findAll().forEach(System.out::println);
+//        bookRepository.findAllCustom().forEach(System.out::println);  // SQL query 를 그대로 사용하기 때문에 @Where 가 적용되지 않는다.
+
+        List<Book> books = bookRepository.findAll();
+
+        for (Book book : books) {
+            book.setCategory("IT 전문서");
+        }
+
+        bookRepository.saveAll(books);
+
+        System.out.println(bookRepository.findAll());
+
+//        System.out.println("affected row : " + bookRepository.updateCategories());
+        bookRepository.findAllCustom().forEach(System.out::println);
+
+        System.out.println(bookRepository.showTables());
+
+        assertEquals(3, bookRepository.updateCategories());
 
     }
 
