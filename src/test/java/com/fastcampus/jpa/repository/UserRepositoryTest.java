@@ -1,8 +1,10 @@
 package com.fastcampus.jpa.repository;
 
+import com.fastcampus.jpa.domain.Address;
 import com.fastcampus.jpa.domain.Gender;
 import com.fastcampus.jpa.domain.User;
 import com.fastcampus.jpa.domain.UserHistory;
+import javax.persistence.EntityManager;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,9 @@ class UserRepositoryTest {
 
     @Autowired
     private UserHistoryRepository userHistoryRepository;
+
+    @Autowired
+    private EntityManager em;
 
     @Test
     void crud() {
@@ -255,6 +260,43 @@ class UserRepositoryTest {
         result.forEach(System.out::println);
 
         System.out.println("UserHistory.getUser() : " + userHistoryRepository.findAll().get(0));
+
+    }
+
+    @DisplayName("2. embedTest")
+    @Test
+    void test_2() throws Exception {
+        userRepository.findAll().forEach(System.out::println);
+
+        User user = new User();
+        user.setName("steve");
+        user.setHomeAddress(new Address("서울시", "강남구", "강남대로 364 미왕빌딩", "06241"));
+        user.setCompanyAddress(new Address("서울시", "성동구", "성수이로 113 제감빌딩", "04794"));
+
+        userRepository.save(user);
+
+        User user1 = new User();
+        user1.setName("joshua");
+        user1.setHomeAddress(null);
+        user1.setCompanyAddress(null);
+
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setName("jordan");
+        user2.setHomeAddress(new Address());
+        user2.setCompanyAddress(new Address());
+
+        userRepository.save(user2);
+
+        // NOTE: embed 된 객체가 null 인 경우 내부의 객체는 null 로 처리된다.
+        // 영속성 캐시에 남아있다면, 조금 다른 결과를 보여주니 잘 확인해보자.
+        // em.clear();  // 영속성 캐시 초기화
+
+        userRepository.findAll().forEach(System.out::println);
+        userHistoryRepository.findAll().forEach(System.out::println);
+
+        userRepository.findAllRawRecord().forEach(a -> System.out.println(a.values()));
 
     }
 

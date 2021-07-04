@@ -14,8 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "user",
-        indexes = {@Index(columnList = "name")},
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+    indexes = {@Index(columnList = "name")},
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @EntityListeners(value = {UserEntityListener.class})
@@ -44,5 +44,23 @@ public class User extends BaseEntity {
     @JoinColumn(name = "user_id")
     @ToString.Exclude
     private List<Review> reviews = new ArrayList<>();
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "city", column = @Column(name = "home_city")),
+        @AttributeOverride(name = "district", column = @Column(name = "home_district")),
+        @AttributeOverride(name = "detail", column = @Column(name = "home_ditail")),
+        @AttributeOverride(name = "zipcode", column = @Column(name = "home_zipcode"))
+    })
+    private Address homeAddress;
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "city", column = @Column(name = "company_city")),
+        @AttributeOverride(name = "district", column = @Column(name = "company_district")),
+        @AttributeOverride(name = "detail", column = @Column(name = "company_ditail")),
+        @AttributeOverride(name = "zipcode", column = @Column(name = "company_zipcode"))
+    })
+    private Address companyAddress;
 
 }
