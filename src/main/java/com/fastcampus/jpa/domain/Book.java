@@ -1,5 +1,6 @@
 package com.fastcampus.jpa.domain;
 
+import com.fastcampus.jpa.repository.dto.BookStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,9 @@ public class Book extends BaseEntity {
     private Long authorId;
 
     private boolean deleted;  // for soft delete
+
+    @Convert(converter = BookStatusConverter.class)
+    private BookStatus status;  // 판매 상태
 
     @OneToOne(mappedBy = "book")
     @ToString.Exclude
