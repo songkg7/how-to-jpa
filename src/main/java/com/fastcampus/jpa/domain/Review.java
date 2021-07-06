@@ -1,5 +1,7 @@
 package com.fastcampus.jpa.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 import lombok.*;
@@ -27,10 +29,16 @@ public class Review extends BaseEntity {
 
     private float score;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Book book;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private List<Comment> comments = new ArrayList<>();
 
 }
