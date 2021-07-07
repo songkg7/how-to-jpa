@@ -16,6 +16,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
@@ -96,8 +98,8 @@ class UserRepositoryTest {
     @Test
     void example() { // NOTE: example 을 사용하는 것보다 querydsl 을 사용하는 것이 더 낫다.
         ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnorePaths("name")
-                .withMatcher("email", endsWith()); // ex) contains(), ...
+            .withIgnorePaths("name")
+            .withMatcher("email", endsWith()); // ex) contains(), ...
 
         Example<User> example = Example.of(new User("ma", "fastcampus.com"), matcher);
 
@@ -121,25 +123,37 @@ class UserRepositoryTest {
         System.out.println("getByEmail : " + userRepository.getByEmail("haril@fastcampus.com"));
         System.out.println("readByEmail : " + userRepository.readByEmail("haril@fastcampus.com"));
         System.out.println("queryByEmail : " + userRepository.queryByEmail("haril@fastcampus.com"));
-        System.out.println("searchByEmail : " + userRepository.searchByEmail("haril@fastcampus.com"));
-        System.out.println("streamByEmail : " + userRepository.streamByEmail("haril@fastcampus.com"));
-        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("haril@fastcampus.com"));
+        System.out
+            .println("searchByEmail : " + userRepository.searchByEmail("haril@fastcampus.com"));
+        System.out
+            .println("streamByEmail : " + userRepository.streamByEmail("haril@fastcampus.com"));
+        System.out
+            .println("findUserByEmail : " + userRepository.findUserByEmail("haril@fastcampus.com"));
 
         // 상위 개수 가져오기
         System.out.println("findFirst1ByName : " + userRepository.findFirst1ByName("haril"));
         System.out.println("findTop2ByName : " + userRepository.findTop2ByName("haril"));
 
-        System.out.println("findByEmailAndName : " + userRepository.findByEmailAndName("haril@fastcampus.com", "haril"));
-        System.out.println("findByEmailOrName : " + userRepository.findByEmailOrName("haril@fastcampus.com", "dennis"));
+        System.out.println("findByEmailAndName : " + userRepository
+            .findByEmailAndName("haril@fastcampus.com", "haril"));
+        System.out.println("findByEmailOrName : " + userRepository
+            .findByEmailOrName("haril@fastcampus.com", "dennis"));
 
-        System.out.println("findByCreatedAtAfter : " + userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
-        System.out.println("findByIdAfter : " + userRepository.findByIdAfter(4L)); // 날짜와 시간이 아니여도 사용가능하지만, 지양하는 것이 좋다.
-        System.out.println("findByCreatedAtGreaterThan : " + userRepository.findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)));
-        System.out.println("findByCreatedAtGreaterThanEqual : " + userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByCreatedAtAfter : " + userRepository
+            .findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByIdAfter : " + userRepository
+            .findByIdAfter(4L)); // 날짜와 시간이 아니여도 사용가능하지만, 지양하는 것이 좋다.
+        System.out.println("findByCreatedAtGreaterThan : " + userRepository
+            .findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByCreatedAtGreaterThanEqual : " + userRepository
+            .findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)));
 
-        System.out.println("findByCreatedAtBetween : " + userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)));
+        System.out.println("findByCreatedAtBetween : " + userRepository
+            .findByCreatedAtBetween(LocalDateTime.now().minusDays(1L),
+                LocalDateTime.now().plusDays(1L)));
         System.out.println("findByIdBetween : " + userRepository.findByIdBetween(1L, 3L));
-        System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
+        System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository
+            .findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
 
     }
 
@@ -148,9 +162,11 @@ class UserRepositoryTest {
         System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
 //        System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty());
         // NOTE: In 절을 사용할 때는 성능이슈가 생길 수 있으므로 들어가는 데이터의 길이에 주의해야 한다.
-        System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("martin", "dennis")));
+        System.out.println("findByNameIn : " + userRepository
+            .findByNameIn(Lists.newArrayList("martin", "dennis")));
 
-        System.out.println("findByNameStartingWith : " + userRepository.findByNameStartingWith("ha"));
+        System.out
+            .println("findByNameStartingWith : " + userRepository.findByNameStartingWith("ha"));
         System.out.println("findByNameEndingWith : " + userRepository.findByNameEndingWith("ril"));
         System.out.println("findByNameContains : " + userRepository.findByNameContains("ari"));
         System.out.println("findByNameLike : " + userRepository.findByNameLike("%ari%"));
@@ -159,12 +175,20 @@ class UserRepositoryTest {
 
     @Test
     void pagingAndSortingTest() {
-        System.out.println("findTop1ByNameOrderByDesc : " + userRepository.findTop1ByNameOrderByIdDesc("haril"));
-        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("haril"));
-        System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("haril", Sort.by(Sort.Order.desc("id"))));
-        System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("haril", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
-        System.out.println("findByNameWithPaging : " + userRepository.findByName("haril", PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id")))).getContent());
-        System.out.println("findByNameWithPaging : " + userRepository.findByName("haril", PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id")))).getTotalElements());
+        System.out.println(
+            "findTop1ByNameOrderByDesc : " + userRepository.findTop1ByNameOrderByIdDesc("haril"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository
+            .findFirstByNameOrderByIdDescEmailAsc("haril"));
+        System.out.println("findFirstByNameWithSortParams : " + userRepository
+            .findFirstByName("haril", Sort.by(Sort.Order.desc("id"))));
+        System.out.println("findFirstByNameWithSortParams : " + userRepository
+            .findFirstByName("haril", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
+        System.out.println("findByNameWithPaging : " + userRepository
+            .findByName("haril", PageRequest.of(0, 1, Sort.by(Sort.Order.desc("id"))))
+            .getContent());
+        System.out.println("findByNameWithPaging : " + userRepository
+            .findByName("haril", PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id"))))
+            .getTotalElements());
     }
 
     @Test
@@ -209,7 +233,7 @@ class UserRepositoryTest {
     void preUpdateTest() {
         User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
 
-        System.out.println("as-is : " +user);
+        System.out.println("as-is : " + user);
 
         user.setName("martin22");
         userRepository.save(user);
@@ -255,7 +279,8 @@ class UserRepositoryTest {
 //                userRepository.findByEmail("daniel@fastcampus.com").getId()
 //        );
 
-        List<UserHistory> result = userRepository.findByEmail("daniel@fastcampus.com").getUserHistories();
+        List<UserHistory> result = userRepository.findByEmail("daniel@fastcampus.com")
+            .getUserHistories();
 
         result.forEach(System.out::println);
 
@@ -297,6 +322,12 @@ class UserRepositoryTest {
         userHistoryRepository.findAll().forEach(System.out::println);
 
         userRepository.findAllRawRecord().forEach(a -> System.out.println(a.values()));
+
+        assertAll(
+            () -> assertThat(userRepository.findById(7L).get().getHomeAddress()).isNull(),
+            () -> assertThat(
+                userRepository.findById(8L).get().getHomeAddress()).isInstanceOf(Address.class)
+        );
 
     }
 
